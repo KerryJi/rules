@@ -1,4 +1,4 @@
-SRC-IP-CIDR,192.168.31.3/32,DST-PORT,80,no-resolve
-SRC-IP-CIDR,192.168.31.3/32,DST-PORT,443,no-resolve
-SRC-IP-CIDR,192.168.31.3/32,DST-PORT,22,no-resolve
-SRC-IP-CIDR,192.168.31.3/32,DST-PORT,53,no-resolve
+DST-PORT,80,no-resolve
+DST-PORT,443,no-resolve
+DST-PORT,22,no-resolve
+DST-PORT,53,no-resolve

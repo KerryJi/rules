@@ -186,4 +186,6 @@ rules:
   - RULE-SET,telegramip,🚀 节点选择,no-resolve
   - RULE-SET,privateip,🎯 全球直连,no-resolve
   - RULE-SET,cnip,🎯 全球直连,no-resolve
+  - RULE-SET,common-port-for-pt,🐟 漏网之鱼,no-resolve
+  - RULE-SET,nas-ip-for-pt,🇨🇳 直连 IP,no-resolve
   - MATCH,🐟 漏网之鱼

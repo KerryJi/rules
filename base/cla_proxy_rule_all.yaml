@@ -155,6 +155,22 @@ rule-providers:
     url: "https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/cnip.mrs"
     interval: 86400
 
+  common-port-for-pt:
+    type: http
+    behavior: ipcidr
+    format: text
+    path: ./rules/common-port-for-pt.list
+    url: "https://raw.githubusercontent.com/KerryJi/rules/main/rule/common-port-for-pt.list"
+    interval: 86400
+
+  nas-ip-for-pt:
+    type: http
+    behavior: classical
+    format: text
+    path: ./rules/nas-ip-for-pt.list
+    url: "https://raw.githubusercontent.com/KerryJi/rules/main/rule/nas-ip-for-pt.list"
+    interval: 86400
+    
 rules:
   - RULE-SET,private,🔒 私有网络
   - RULE-SET,direct-self,🎯 全球直连
@@ -172,4 +188,6 @@ rules:
   - RULE-SET,telegramip,📲 电报信息,no-resolve
   - RULE-SET,privateip,🔒 私有网络,no-resolve
   - RULE-SET,cnip,🇨🇳 直连 IP,no-resolve
+  - RULE-SET,common-port-for-pt,🐟 漏网之鱼,no-resolve
+  - RULE-SET,nas-ip-for-pt,🇨🇳 直连 IP,no-resolve
   - MATCH,🐟 漏网之鱼

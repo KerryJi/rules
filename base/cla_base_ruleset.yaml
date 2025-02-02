@@ -156,6 +156,22 @@ rule-providers:
     url: "https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/cnip.mrs"
     interval: 86400
 
+  common-port-for-pt:
+    type: http
+    behavior: ipcidr
+    format: text
+    path: ./rules/common-port-for-pt.list
+    url: "https://raw.githubusercontent.com/KerryJi/rules/main/rule/common-port-for-pt.list"
+    interval: 86400
+
+  nas-ip-for-pt:
+    type: http
+    behavior: classical
+    format: text
+    path: ./rules/nas-ip-for-pt.list
+    url: "https://raw.githubusercontent.com/KerryJi/rules/main/rule/nas-ip-for-pt.list"
+    interval: 86400
+    
 rules:
   - RULE-SET,private,🎯 全球直连
   - RULE-SET,direct-self,🎯 全球直连

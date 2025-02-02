@@ -157,7 +157,7 @@ rule-providers:
 
   common-port-for-pt:
     type: http
-    behavior: ipcidr
+    behavior: classical
     format: text
     path: ./rules/common-port-for-pt.list
     url: "https://raw.githubusercontent.com/KerryJi/rules/main/rule/common-port-for-pt.list"

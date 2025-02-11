@@ -87,6 +87,8 @@ jobs:
         curl -O https://gist.githubusercontent.com/KerryJi/${{ secrets.GIST_ID }}/raw/cla_providers.yaml
         yq eval-all '. as $item ireduce ({}; . * $item)' base/cla_base_ruleset.yaml base/user.yaml cla_providers.yaml > cla_ruleset.yaml
         yq eval-all '. as $item ireduce ({}; . * $item)' cla_ruleset.yaml base/cla_proxy_rule_all.yaml > cla_ruleset_all.yaml
+        yq eval-all '. as $item ireduce ({}; . * $item)' base/cla_base_ruleset.yaml base/user_redirhost.yaml cla_providers.yaml > cla_ruleset_redirhost.yaml
+        yq eval-all '. as $item ireduce ({}; . * $item)' cla_ruleset_redirhost.yaml base/cla_proxy_rule_all.yaml > cla_ruleset_all_redirhost.yaml
     - name: Push to gist
       uses: exuanbo/actions-deploy-gist@v1
       with:

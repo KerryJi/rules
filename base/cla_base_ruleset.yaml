@@ -24,6 +24,7 @@ proxy-groups:
   - {name: 🚀 节点选择, type: select, proxies: [🌐 国外流量, 🎯 全球直连]}
   # 若机场的 UDP 质量不是很好，导致某游戏无法登录或进入房间，可以添加 `disable-udp: true` 配置项解决
   - {name: 🐟 漏网之鱼, type: select, proxies: [🚀 节点选择, 🎯 全球直连]}
+  - {name: 📡 PT, type: select, proxies: [🎯 全球直连, 🚀 节点选择]}
   - {name: 🎯 全球直连, type: select, proxies: [DIRECT]}
 
 
@@ -50,6 +51,14 @@ rule-providers:
     format: text
     path: ./rules/proxy-self.list
     url: "https://raw.githubusercontent.com/KerryJi/rules/main/rule/proxy-self.list"
+    interval: 86400
+
+  pt:
+    type: http
+    behavior: classical
+    format: text
+    path: ./rules/pt.list
+    url: "https://raw.githubusercontent.com/KerryJi/rules/main/rule/pt.list"
     interval: 86400
 
   ntpservice:
@@ -177,6 +186,7 @@ rules:
   - RULE-SET,direct-self,🎯 全球直连
   - RULE-SET,ntpservice,🎯 全球直连
   - RULE-SET,proxy-self,🚀 节点选择
+  - RULE-SET,pt,📡 PT
   - RULE-SET,microsoft-cn,🎯 全球直连
   - RULE-SET,apple-cn,🎯 全球直连
   - RULE-SET,google-cn,🚀 节点选择

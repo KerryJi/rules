@@ -124,6 +124,20 @@ jobs:
       with:
         token: ${{ secrets.GIST_TOKEN }}
         gist_id:  ${{ secrets.GIST_ID }}
+        file_path: cla_ruleset_router.yaml
+        file_type: text
+    - name: Push to gist
+      uses: exuanbo/actions-deploy-gist@v1
+      with:
+        token: ${{ secrets.GIST_TOKEN }}
+        gist_id:  ${{ secrets.GIST_ID }}
+        file_path: cla_ruleset_all_router.yaml
+        file_type: text
+    - name: Push to gist
+      uses: exuanbo/actions-deploy-gist@v1
+      with:
+        token: ${{ secrets.GIST_TOKEN }}
+        gist_id:  ${{ secrets.GIST_ID }}
         file_path: sb_ruleset.json
         file_type: text
     - name: Push to gist

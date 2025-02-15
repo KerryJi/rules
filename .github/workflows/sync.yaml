@@ -89,6 +89,8 @@ jobs:
         yq eval-all '. as $item ireduce ({}; . * $item)' cla_ruleset.yaml base/cla_proxy_rule_all.yaml > cla_ruleset_all.yaml
         yq eval-all '. as $item ireduce ({}; . * $item)' base/cla_base_ruleset.yaml base/user_redirhost.yaml cla_providers.yaml > cla_ruleset_redirhost.yaml
         yq eval-all '. as $item ireduce ({}; . * $item)' cla_ruleset_redirhost.yaml base/cla_proxy_rule_all.yaml > cla_ruleset_all_redirhost.yaml
+        yq eval-all '. as $item ireduce ({}; . * $item)' base/cla_base_ruleset.yaml base/user_router.yaml cla_providers.yaml > cla_ruleset_router.yaml
+        yq eval-all '. as $item ireduce ({}; . * $item)' cla_ruleset_router.yaml base/cla_proxy_rule_all.yaml > cla_ruleset_all_router.yaml
     - name: Push to gist
       uses: exuanbo/actions-deploy-gist@v1
       with:

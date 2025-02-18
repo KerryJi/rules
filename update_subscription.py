@@ -314,6 +314,8 @@ if __name__ == "__main__":
         with open(output, "w") as file:
             file.write(result)
     else:
+        with open(output+'.link', "w") as file:
+            file.write(result)
         # 定义重试策略
         retry_strategy = Retry(
             total=3,  # 重试次数

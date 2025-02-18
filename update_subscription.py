@@ -329,8 +329,11 @@ if __name__ == "__main__":
         session.mount("http://", adapter)
         session.mount("https://", adapter)
 
-        response = session.get(result)
-        response.raise_for_status()
+        # response = session.get(result)
+        payload = {"url": result}  # 传递 URL 作为参数
+        response = session.post(backend, data=payload, timeout=100)
+
+        # response.raise_for_status()s
         text = response.text
         if "json" in output:
             text = json.dumps(json.loads(text), indent=2, ensure_ascii=False)

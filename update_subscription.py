@@ -314,6 +314,7 @@ if __name__ == "__main__":
         with open(output, "w") as file:
             file.write(result)
     else:
+        result = urllib.parse.quote(result)
         with open(output+'.link', "w") as file:
             file.write(result)
         # 定义重试策略
@@ -332,7 +333,7 @@ if __name__ == "__main__":
         response.raise_for_status()
         text = response.text
         if "json" in output:
-            text = json.dumps(json.loads(text), indent=4, ensure_ascii=False)
+            text = json.dumps(json.loads(text), indent=2, ensure_ascii=False)
 
         with open(output, "w") as file:
             file.write(text)

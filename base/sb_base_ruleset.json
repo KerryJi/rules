@@ -70,21 +70,21 @@
                 "type": "remote",
                 "format": "binary",
                 "download_detour": "🚀 节点选择",
-                "url": "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/sing-box-ruleset/fakeip-filter.srs"
+                "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset-compatible/fakeip-filter.srs"
             },
             {
                 "tag": "proxy",
                 "type": "remote",
                 "format": "binary",
                 "download_detour": "🚀 节点选择",
-                "url": "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/sing-box-ruleset/proxy.srs"
+                "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset-compatible/proxy.srs"
             },
             {
                 "tag": "private",
                 "type": "remote",
                 "format": "binary",
                 "download_detour": "🚀 节点选择",
-                "url": "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/sing-box-ruleset/private.srs"
+                "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset-compatible/private.srs"
             },
             {
                 "tag": "direct-self",
@@ -112,7 +112,7 @@
                 "type": "remote",
                 "format": "binary",
                 "download_detour": "🚀 节点选择",
-                "url": "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/sing-box-ruleset/ai.srs"
+                "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset-compatible/ai.srs"
             },
             {
                 "tag": "tiktok",
@@ -154,7 +154,7 @@
                 "type": "remote",
                 "format": "binary",
                 "download_detour": "🚀 节点选择",
-                "url": "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/sing-box-ruleset/telegramip.srs"
+                "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset-compatible/telegramip.srs"
             },
             {
                 "tag": "win-spy",
@@ -175,42 +175,42 @@
                 "type": "remote",
                 "format": "binary",
                 "download_detour": "🚀 节点选择",
-                "url": "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/sing-box-ruleset/microsoft-cn.srs"
+                "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset-compatible/microsoft-cn.srs"
             },
             {
                 "tag": "google-cn",
                 "type": "remote",
                 "format": "binary",
                 "download_detour": "🚀 节点选择",
-                "url": "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/sing-box-ruleset/google-cn.srs"
+                "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset-compatible/google-cn.srs"
             },
             {
                 "tag": "apple-cn",
                 "type": "remote",
                 "format": "binary",
                 "download_detour": "🚀 节点选择",
-                "url": "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/sing-box-ruleset/apple-cn.srs"
+                "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset-compatible/apple-cn.srs"
             },
             {
                 "tag": "cn",
                 "type": "remote",
                 "format": "binary",
                 "download_detour": "🚀 节点选择",
-                "url": "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/sing-box-ruleset/cn.srs"
+                "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset-compatible/cn.srs"
             },
             {
                 "tag": "cn-ip",
                 "type": "remote",
                 "format": "binary",
                 "download_detour": "🚀 节点选择",
-                "url": "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/sing-box-ruleset/cnip.srs"
+                "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset-compatible/cnip.srs"
             },
             {
                 "tag": "private-ip",
                 "type": "remote",
                 "format": "binary",
                 "download_detour": "🚀 节点选择",
-                "url": "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/sing-box-ruleset/privateip.srs"
+                "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset-compatible/privateip.srs"
             }
         ]
     }

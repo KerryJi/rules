@@ -323,17 +323,17 @@ if __name__ == "__main__":
             status_forcelist=[429, 500, 502, 503, 504],  # 对哪些HTTP状态码重试
             backoff_factor=1  # 等待时间的增长因子
         )
-
+        headers = {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36",
+                "Accept": "application/json"
+            }
         session = requests.Session()
         adapter = HTTPAdapter(max_retries=retry_strategy)
         session.mount("http://", adapter)
         session.mount("https://", adapter)
 
-        # response = session.get(result)
-        payload = {"url": result}  # 传递 URL 作为参数
-        response = session.post(backend, data=payload, timeout=100)
-        print(response)
-        # response.raise_for_status()s
+        response = session.get(result, headers=headers)
+        response.raise_for_status()
         text = response.text
         if "json" in output:
             text = json.dumps(json.loads(text), indent=2, ensure_ascii=False)

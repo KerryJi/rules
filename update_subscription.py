@@ -314,7 +314,7 @@ if __name__ == "__main__":
         with open(output, "w") as file:
             file.write(result)
     else:
-        result = urllib.parse.quote(result)
+        # result = urllib.parse.quote(result)
         with open(output+'.link', "w") as file:
             file.write(result)
         # 定义重试策略

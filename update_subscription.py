@@ -332,7 +332,7 @@ if __name__ == "__main__":
         # response = session.get(result)
         payload = {"url": result}  # 传递 URL 作为参数
         response = session.post(backend, data=payload, timeout=100)
-
+        print(response)
         # response.raise_for_status()s
         text = response.text
         if "json" in output:

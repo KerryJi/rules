@@ -332,7 +332,7 @@ if __name__ == "__main__":
         response.raise_for_status()
         text = response.text
         if "json" in output:
-            text = json.dumps(json.loads(text), indent=2, ensure_ascii=False)
+            text = json.dumps(json.loads(text), indent=4, ensure_ascii=False)
 
         with open(output, "w") as file:
             file.write(text)

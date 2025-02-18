@@ -8,7 +8,7 @@ on:
     - cron: '0 3 * * 6'
 
 env:
-  CHOOSE_END: "10"
+  CHOOSE_END: "8"
   CONFIG: "https://raw.githubusercontent.com/KerryJi/rules/main/cla.ini"
   CONFIG2: "https://raw.githubusercontent.com/KerryJi/rules/main/nodnsleak.ini"
   CONFIG3: "https://raw.githubusercontent.com/KerryJi/rules/main/sb_ruleset.ini"
@@ -64,12 +64,12 @@ jobs:
       run: |
         curl -O https://gist.githubusercontent.com/KerryJi/${{ secrets.GIST_ID }}/raw/suburl.txt
         SUBSCRIPTION_URLS=$(paste -sd '|' suburl.txt)
-        python3 update_subscription.py -s "${SUBSCRIPTION_URLS}" -c "${CONFIG}" -e "${CHOOSE_END}" -t "clash" -o "cla.yaml"
+        # python3 update_subscription.py -s "${SUBSCRIPTION_URLS}" -c "${CONFIG}" -e "${CHOOSE_END}" -t "clash" -o "cla.yaml"
         # - python3 update_subscription_script.py -s "${SUBSCRIPTION_URLS}" -c "${CONFIG}" -e "${CHOOSE_END}" -t "singbox" -o "singbox.json"
-        python3 update_subscription.py -s "${SUBSCRIPTION_URLS}" -c "${CONFIG2}" -e "${CHOOSE_END}" -t "clash" -o "cla2.yaml"
+        # python3 update_subscription.py -s "${SUBSCRIPTION_URLS}" -c "${CONFIG2}" -e "${CHOOSE_END}" -t "clash" -o "cla2.yaml"
         # - python3 update_subscription_script.py -s "${SUBSCRIPTION_URLS}" -c "${CONFIG2}" -e "${CHOOSE_END}" -t "singbox" -o "singbox2.json"
         python3 update_subscription.py -s "${SUBSCRIPTION_URLS}" -c "${CONFIG3}" -e "${CHOOSE_END}" -t "singbox" -o "sb_ruleset.json"
-        python3 update_subscription.py -s "${SUBSCRIPTION_URLS}" -c "${CONFIG4}" -e "${CHOOSE_END}" -t "singbox" -o "sbp_ruleset.json"
+        # python3 update_subscription.py -s "${SUBSCRIPTION_URLS}" -c "${CONFIG4}" -e "${CHOOSE_END}" -t "singbox" -o "sbp_ruleset.json"
     - name: create spb_ruleset2.json
       run: |
         curl -O https://gist.githubusercontent.com/KerryJi/${{ secrets.GIST_ID }}/raw/outbound_providers.json

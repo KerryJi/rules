@@ -23,7 +23,7 @@
           { "rule_set": [ "cn" ], "query_type": [ "A", "AAAA" ], "server": "dns_dnspod" },
           { "rule_set": [ "proxy"], "query_type": [ "A", "AAAA" ], "server": "dns_fakeip", "rewrite_ttl": 0 }
         ],
-        "final": "dns_proxy",
+        "final": "dns_dnspod",
         "strategy": "prefer_ipv4",
         "independent_cache": true,
         "reverse_mapping": true,

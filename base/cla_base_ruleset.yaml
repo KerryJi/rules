@@ -5,8 +5,6 @@ external-ui: ui
 external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
 find-process-mode: strict
 
-
-
 tun:
   enable: true
   stack: system

@@ -5,7 +5,7 @@ unified-delay: false
 tcp-concurrent: true
 global-client-fingerprint: chrome
 profile: {store-selected: true}
-
+external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
 
 sniffer:
   enable: true

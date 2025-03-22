@@ -5,7 +5,7 @@ unified-delay: false
 tcp-concurrent: true
 global-client-fingerprint: chrome
 profile: {store-selected: true}
-
+external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
 
 sniffer:
   enable: true
@@ -20,7 +20,7 @@ hosts:
   dns.alidns.com: [223.5.5.5, 223.6.6.6, 2400:3200::1, 2400:3200:baba::1]
   # doh.pub: [1.12.12.12, 120.53.53.53]
   # dns.alidns.com: [223.5.5.5, 223.6.6.6]
-  services.googleapis.cn: services.googleapis.com
+  # services.googleapis.cn: services.googleapis.com
 
 dns:
   enable: true

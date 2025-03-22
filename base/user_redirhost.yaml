@@ -6,8 +6,6 @@ tcp-concurrent: true
 global-client-fingerprint: chrome
 profile: {store-selected: true}
 
-external-controller: 0.0.0.0:9090
-external-ui: ui
 external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
 
 sniffer:

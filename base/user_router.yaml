@@ -30,6 +30,12 @@ dns:
   listen: 0.0.0.0:7874
   fake-ip-range: 198.18.0.1/16
   enhanced-mode: fake-ip
-  fake-ip-filter: ['rule-set:fakeip-filter,private,cn,direct-self,ntpservice']
+  fake-ip-filter: ['rule-set:fakeip-filter,private,cn,direct-self,ntpservice,pt']
   nameserver:
+    - https://doh.pub/dns-query
+    - https://dns.alidns.com/dns-query
     - 192.168.31.3:6553
+  direct-nameserver:
+    - https://doh.pub/dns-query
+    - https://dns.alidns.com/dns-query
+   

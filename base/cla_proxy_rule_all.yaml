@@ -76,20 +76,36 @@ rule-providers:
     url: "https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/ads.mrs"
     interval: 86400
 
-  microsoft-cn:
+  # microsoft-cn:
+  #   type: http
+  #   behavior: domain
+  #   format: mrs
+  #   path: ./rules/microsoft-cn.mrs
+  #   url: "https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/microsoft-cn.mrs"
+  #   interval: 86400
+
+  microsoft:
     type: http
     behavior: domain
     format: mrs
-    path: ./rules/microsoft-cn.mrs
-    url: "https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/microsoft-cn.mrs"
+    path: ./rules/microsoft.mrs
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/blob/meta/geo-lite/geosite/microsoft.mrs"
     interval: 86400
 
-  apple-cn:
+  # apple-cn:
+  #   type: http
+  #   behavior: domain
+  #   format: mrs
+  #   path: ./rules/apple-cn.mrs
+  #   url: "https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/apple-cn.mrs"
+  #   interval: 86400
+
+  apple:
     type: http
     behavior: domain
     format: mrs
-    path: ./rules/apple-cn.mrs
-    url: "https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/apple-cn.mrs"
+    path: ./rules/apple.mrs
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/blob/meta/geo-lite/geosite/apple.mrs"
     interval: 86400
 
   google-cn:
@@ -187,8 +203,8 @@ rules:
   - RULE-SET,proxy-self,🧱 代理域名
   - RULE-SET,pt,📡 PT
   - RULE-SET,ads,🛑 广告拦截
-  - RULE-SET,microsoft-cn,🪟 微软服务
-  - RULE-SET,apple-cn,🍎 苹果服务
+  - RULE-SET,microsoft,🪟 微软服务
+  - RULE-SET,apple,🍎 苹果服务
   - RULE-SET,google-cn,🇬 谷歌服务
   - RULE-SET,games-cn,🎮 游戏服务
   - RULE-SET,ai,🤖 人工智能

@@ -88,7 +88,7 @@ rule-providers:
     behavior: domain
     format: mrs
     path: ./rules/microsoft.mrs
-    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/blob/meta/geo-lite/geosite/microsoft.mrs"
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo-lite/geosite/microsoft.mrs"
     interval: 86400
 
   # apple-cn:
@@ -104,7 +104,7 @@ rule-providers:
     behavior: domain
     format: mrs
     path: ./rules/apple.mrs
-    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/blob/meta/geo-lite/geosite/apple.mrs"
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo-lite/geosite/apple.mrs"
     interval: 86400
 
   google-cn:

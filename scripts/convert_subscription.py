@@ -106,36 +106,20 @@ def extract_node_links(lines, decoded_content=None):
     return node_links
 
 
-def convert_subscription(subscription_url, output_filename='sub_xfltd'):
+def process_subscription_content(content, output_filename='sub_xfltd'):
     """
-    转换订阅链接为纯文本格式
+    处理订阅内容（base64 编码或原始内容）并转换为纯文本格式
     
     Args:
-        subscription_url: 机场订阅链接
+        content: 订阅内容（base64 编码的字符串或原始内容）
         output_filename: 输出文件名（不含扩展名）
         
     Returns:
         str: 输出文件路径
     """
-    if not subscription_url:
-        print("错误: 未提供订阅链接")
-        print("请通过命令行参数 --url 或环境变量 SUBSCRIPTION_URL 提供")
-        sys.exit(1)
-
-    print(f"正在获取订阅内容: {subscription_url}")
+    print(f"正在处理订阅内容，内容长度: {len(content)} 字符")
     
     try:
-        # 获取订阅内容
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-        }
-        response = requests.get(subscription_url, headers=headers, timeout=60)
-        response.raise_for_status()
-        
-        # 订阅内容通常是 base64 编码的
-        content = response.text.strip()
-        print(f"获取到内容长度: {len(content)} 字符")
-        
         # 解码订阅内容
         lines, decoded_content = decode_subscription_content(content)
         
@@ -168,6 +152,52 @@ def convert_subscription(subscription_url, output_filename='sub_xfltd'):
         
         return output_file
         
+    except Exception as e:
+        print(f"错误: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        sys.exit(1)
+
+
+def convert_subscription(subscription_url=None, subscription_content=None, output_filename='sub_xfltd'):
+    """
+    转换订阅链接或内容为纯文本格式
+    
+    Args:
+        subscription_url: 机场订阅链接（可选）
+        subscription_content: 订阅内容（base64 编码，可选）
+        output_filename: 输出文件名（不含扩展名）
+        
+    Returns:
+        str: 输出文件路径
+    """
+    # 优先使用直接提供的内容
+    if subscription_content:
+        return process_subscription_content(subscription_content.strip(), output_filename)
+    
+    # 如果没有提供内容，则从 URL 获取
+    if not subscription_url:
+        print("错误: 未提供订阅链接或订阅内容")
+        print("请通过以下方式之一提供:")
+        print("  - 命令行参数 --url 或环境变量 SUBSCRIPTION_URL（订阅链接）")
+        print("  - 命令行参数 --content 或环境变量 SUBSCRIPTION_CONTENT（base64 内容）")
+        sys.exit(1)
+
+    print(f"正在获取订阅内容: {subscription_url}")
+    
+    try:
+        # 获取订阅内容
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+        }
+        response = requests.get(subscription_url, headers=headers, timeout=60)
+        response.raise_for_status()
+        
+        # 订阅内容通常是 base64 编码的
+        content = response.text.strip()
+        
+        return process_subscription_content(content, output_filename)
+        
     except requests.exceptions.RequestException as e:
         print(f"网络请求错误: {str(e)}")
         sys.exit(1)
@@ -185,11 +215,15 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 示例:
+  # 使用订阅链接
   python convert_subscription.py --url "https://example.com/sub" --output "sub_xfltd"
-  python convert_subscription.py --url "https://example.com/sub"
+  
+  # 使用 base64 内容
+  python convert_subscription.py --content "dHJvamFuOi8v..." --output "sub_xfltd"
   
 环境变量:
   SUBSCRIPTION_URL: 订阅链接
+  SUBSCRIPTION_CONTENT: 订阅内容（base64 编码）
   OUTPUT_FILENAME: 输出文件名（不含扩展名）
         """
     )
@@ -198,6 +232,12 @@ def main():
         '--url', '-u',
         type=str,
         help='机场订阅链接'
+    )
+    
+    parser.add_argument(
+        '--content', '-c',
+        type=str,
+        help='订阅链接返回的 base64 内容（与 --url 二选一）'
     )
     
     parser.add_argument(
@@ -211,9 +251,14 @@ def main():
     
     # 优先使用命令行参数，其次使用环境变量
     subscription_url = args.url or os.environ.get('SUBSCRIPTION_URL')
+    subscription_content = args.content or os.environ.get('SUBSCRIPTION_CONTENT')
     output_filename = args.output or os.environ.get('OUTPUT_FILENAME', 'sub_xfltd')
     
-    convert_subscription(subscription_url, output_filename)
+    convert_subscription(
+        subscription_url=subscription_url,
+        subscription_content=subscription_content,
+        output_filename=output_filename
+    )
 
 
 if __name__ == '__main__':

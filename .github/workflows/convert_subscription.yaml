@@ -4,8 +4,12 @@ on:
   workflow_dispatch:
     inputs:
       subscription_url:
-        description: '机场订阅链接'
-        required: true
+        description: '机场订阅链接（可选，与订阅内容二选一）'
+        required: false
+        type: string
+      subscription_content:
+        description: '订阅链接返回的 base64 内容（可选，与订阅链接二选一）'
+        required: false
         type: string
       output_filename:
         description: '输出文件名（不含扩展名）'
@@ -39,11 +43,18 @@ jobs:
     - name: Convert subscription to text format
       env:
         SUBSCRIPTION_URL: ${{ github.event.inputs.subscription_url || secrets.SUBSCRIPTION_URL }}
+        SUBSCRIPTION_CONTENT: ${{ github.event.inputs.subscription_content }}
         OUTPUT_FILENAME: ${{ env.OUTPUT_FILENAME }}
       run: |
-        python3 scripts/convert_subscription.py \
-          --url "$SUBSCRIPTION_URL" \
-          --output "$OUTPUT_FILENAME"
+        if [ -n "$SUBSCRIPTION_CONTENT" ]; then
+          python3 scripts/convert_subscription.py \
+            --content "$SUBSCRIPTION_CONTENT" \
+            --output "$OUTPUT_FILENAME"
+        else
+          python3 scripts/convert_subscription.py \
+            --url "$SUBSCRIPTION_URL" \
+            --output "$OUTPUT_FILENAME"
+        fi
 
     - name: Display file content (preview)
       env:

@@ -64,8 +64,17 @@ jobs:
         path: ${{ env.OUTPUT_FILENAME }}.txt
         retention-days: 7
 
+    - name: Check gist secrets
+      id: check_gist
+      run: |
+        if [ -n "${{ secrets.GIST_TOKEN }}" ] && [ -n "${{ secrets.GIST_ID }}" ]; then
+          echo "has_secrets=true" >> $GITHUB_OUTPUT
+        else
+          echo "has_secrets=false" >> $GITHUB_OUTPUT
+        fi
+
     - name: Push to gist (optional)
-      if: secrets.GIST_TOKEN != '' && secrets.GIST_ID != ''
+      if: steps.check_gist.outputs.has_secrets == 'true'
       uses: exuanbo/actions-deploy-gist@v1
       with:
         token: ${{ secrets.GIST_TOKEN }}

@@ -8,7 +8,7 @@ on:
     - cron: '0 3 * * 6'
 
 env:
-  CHOOSE_END: "8"
+  CHOOSE_END: "9"
   CONFIG: "https://raw.githubusercontent.com/KerryJi/rules/main/cla.ini"
   CONFIG2: "https://raw.githubusercontent.com/KerryJi/rules/main/nodnsleak.ini"
   CONFIG3: "https://raw.githubusercontent.com/KerryJi/rules/main/sb_ruleset.ini"

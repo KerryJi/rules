@@ -30,7 +30,7 @@ def choose_backend(choose_end):
     elif choose_end == "7":
         backend = "https://api.tsutsu.one/sub?"
     elif choose_end == "8":
-        backend = "https://sub.d1.mk/sub?"
+        backend = "https://url.v1.mk/sub?"
     elif choose_end == "9":
         backend = "https://api.v1.mk/sub?"
     elif choose_end == "10":

@@ -65,7 +65,7 @@ jobs:
         retention-days: 7
 
     - name: Push to gist (optional)
-      if: ${{ secrets.GIST_TOKEN && secrets.GIST_ID }}
+      if: secrets.GIST_TOKEN != '' && secrets.GIST_ID != ''
       uses: exuanbo/actions-deploy-gist@v1
       with:
         token: ${{ secrets.GIST_TOKEN }}

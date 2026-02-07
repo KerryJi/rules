@@ -1,0 +1,84 @@
+name: Convert Subscription to Text Format
+
+on:
+  workflow_dispatch:
+    inputs:
+      subscription_url:
+        description: '机场订阅链接'
+        required: true
+        type: string
+      output_filename:
+        description: '输出文件名（不含扩展名）'
+        required: false
+        default: 'sub_xfltd'
+        type: string
+  schedule:
+    # 每天凌晨3点自动运行（可选，如果订阅链接在 secrets 中）
+    - cron: '0 3 * * *'
+
+env:
+  OUTPUT_FILENAME: ${{ github.event.inputs.output_filename || 'sub_xfltd' }}
+
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        pip install requests
+
+    - name: Convert subscription to text format
+      env:
+        SUBSCRIPTION_URL: ${{ github.event.inputs.subscription_url || secrets.SUBSCRIPTION_URL }}
+        OUTPUT_FILENAME: ${{ env.OUTPUT_FILENAME }}
+      run: |
+        python3 scripts/convert_subscription.py \
+          --url "$SUBSCRIPTION_URL" \
+          --output "$OUTPUT_FILENAME"
+
+    - name: Display file content (preview)
+      env:
+        OUTPUT_FILENAME: ${{ env.OUTPUT_FILENAME }}
+      run: |
+        output_file="${OUTPUT_FILENAME}.txt"
+        if [ -f "$output_file" ]; then
+          echo "文件内容预览（前20行）:"
+          head -n 20 "$output_file"
+          echo ""
+          echo "总行数: $(wc -l < "$output_file")"
+        fi
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: subscription-text
+        path: ${{ env.OUTPUT_FILENAME }}.txt
+        retention-days: 7
+
+    - name: Push to gist (optional)
+      if: ${{ secrets.GIST_TOKEN && secrets.GIST_ID }}
+      uses: exuanbo/actions-deploy-gist@v1
+      with:
+        token: ${{ secrets.GIST_TOKEN }}
+        gist_id: ${{ secrets.GIST_ID }}
+        file_path: ${{ env.OUTPUT_FILENAME }}.txt
+        file_type: text
+
+    - name: Output raw file URL
+      if: github.event_name == 'workflow_dispatch'
+      run: |
+        echo "## 转换完成" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "文件已生成: \`${{ env.OUTPUT_FILENAME }}.txt\`" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "如果配置了 GIST_TOKEN 和 GIST_ID，文件已自动推送到 gist。" >> $GITHUB_STEP_SUMMARY
+        echo "Gist 原始文件链接格式: \`https://gist.githubusercontent.com/USERNAME/GIST_ID/raw/${{ env.OUTPUT_FILENAME }}.txt\`" >> $GITHUB_STEP_SUMMARY

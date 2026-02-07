@@ -56,16 +56,15 @@ jobs:
             --output "$OUTPUT_FILENAME"
         fi
 
-    - name: Display file content (preview)
+    - name: Display file statistics
       env:
         OUTPUT_FILENAME: ${{ env.OUTPUT_FILENAME }}
       run: |
         output_file="${OUTPUT_FILENAME}.txt"
         if [ -f "$output_file" ]; then
-          echo "文件内容预览（前20行）:"
-          head -n 20 "$output_file"
-          echo ""
+          echo "文件生成成功"
           echo "总行数: $(wc -l < "$output_file")"
+          echo "文件大小: $(du -h "$output_file" | cut -f1)"
         fi
 
     - name: Upload artifact

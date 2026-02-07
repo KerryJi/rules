@@ -41,7 +41,7 @@ def decode_subscription_content(content):
         print("成功使用 base64 解码")
         return lines, decoded_content
     except Exception as e:
-        print(f"Base64 解码失败: {e}，尝试其他方法")
+        print(f"Base64 解码失败，尝试其他方法")
     
     # 方法2: 如果不是 base64 或解码失败，直接使用原始内容
     if not lines or len(lines) == 0:
@@ -128,8 +128,6 @@ def process_subscription_content(content, output_filename='sub_xfltd'):
         
         if not node_links:
             print("错误: 无法从订阅内容中提取任何节点信息")
-            print("内容预览（前500字符）:")
-            print(content[:500])
             sys.exit(1)
         
         # 去重并保持顺序
@@ -153,9 +151,8 @@ def process_subscription_content(content, output_filename='sub_xfltd'):
         return output_file
         
     except Exception as e:
-        print(f"错误: {str(e)}")
-        import traceback
-        traceback.print_exc()
+        print(f"错误: {type(e).__name__}")
+        # 不打印详细错误信息，避免泄露敏感内容
         sys.exit(1)
 
 
@@ -183,7 +180,8 @@ def convert_subscription(subscription_url=None, subscription_content=None, outpu
         print("  - 命令行参数 --content 或环境变量 SUBSCRIPTION_CONTENT（base64 内容）")
         sys.exit(1)
 
-    print(f"正在获取订阅内容: {subscription_url}")
+    # 不打印完整 URL，避免泄露敏感信息
+    print("正在从订阅链接获取内容...")
     
     try:
         # 获取订阅内容
@@ -199,12 +197,11 @@ def convert_subscription(subscription_url=None, subscription_content=None, outpu
         return process_subscription_content(content, output_filename)
         
     except requests.exceptions.RequestException as e:
-        print(f"网络请求错误: {str(e)}")
+        print(f"网络请求错误: {type(e).__name__}")
         sys.exit(1)
     except Exception as e:
-        print(f"错误: {str(e)}")
-        import traceback
-        traceback.print_exc()
+        print(f"错误: {type(e).__name__}")
+        # 不打印详细错误信息，避免泄露敏感内容
         sys.exit(1)
 
 

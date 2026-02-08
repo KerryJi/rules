@@ -8,33 +8,43 @@ profile: {store-selected: true}
 
 external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
 
-sniffer:
-  enable: true
-  parse-pure-ip: true
-  sniff: {HTTP: {ports: [80, 8080-8880]}, TLS: {ports: [443, 8443]}, QUIC: {ports: [443, 8443]}}
-  skip-domain: ['Mijia Cloud']
+# sniffer:
+#   enable: true
+#   parse-pure-ip: true
+#   sniff: {HTTP: {ports: [80, 8080-8880]}, TLS: {ports: [443, 8443]}, QUIC: {ports: [443, 8443]}}
+#   skip-domain: ['Mijia Cloud']
 
 hosts:
-  # miwifi.com: 192.168.31.1
-
   doh.pub: [1.12.12.12, 120.53.53.53, 2402:4e00::]
   dns.alidns.com: [223.5.5.5, 223.6.6.6, 2400:3200::1, 2400:3200:baba::1]
-  # doh.pub: [1.12.12.12, 120.53.53.53]
-  # dns.alidns.com: [223.5.5.5, 223.6.6.6]
-  # services.googleapis.cn: services.googleapis.com
+  dns.google: [8.8.8.8, 8.8.4.4, 2001:4860:4860::8888, 2001:4860:4860::8844]
+  dns11.quad9.net: [9.9.9.11, 149.112.112.11, 2620:fe::11, 2620:fe::fe:11]
 
 dns:
   enable: true
-  prefer-h3: true
   ipv6: true
-  listen: 0.0.0.0:7874
-  fake-ip-range: 198.18.0.1/16
+  listen: 0.0.0.0:1053
   enhanced-mode: fake-ip
-  fake-ip-filter: ['rule-set:fakeip-filter,private,cn,direct-self,ntpservice,pt']
+  fake-ip-range: 28.0.0.0/8
+  fake-ip-range6: fc00::/16
+  fake-ip-filter-mode: rule
+  fake-ip-filter:
+    - RULE-SET,fakeip-filter,real-ip
+    - RULE-SET,private,real-ip
+    - RULE-SET,cn,real-ip
+    - RULE-SET,direct-self,real-ip
+    - RULE-SET,ntpservice,real-ip
+    - RULE-SET,pt,real-ip
+    - RULE-SET,proxy,fake-ip
+    - MATCH,real-ip
+  respect-rules: true
   nameserver:
-    - https://doh.pub/dns-query
-    - https://dns.alidns.com/dns-query
+    # 推荐将 `ecs` 设置为当前宽带运营商分配的默认 DNS 的 IP 段
+    - 'https://dns.google/dns-query#ecs=210.22.70.3/24'
+    - 'https://dns11.quad9.net/dns-query#ecs=210.22.70.3/24'
+  proxy-server-nameserver:
+    - https://dns.pub/dns-query
+    - quic://dns.alidns.com:853
   direct-nameserver:
-    - https://doh.pub/dns-query
-    - https://dns.alidns.com/dns-query
-
+    - https://dns.pub/dns-query
+    - quic://dns.alidns.com:853

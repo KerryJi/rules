@@ -16,9 +16,6 @@ on:
         required: false
         default: 'sub_xfltd'
         type: string
-  schedule:
-    # 每天凌晨3点自动运行（可选，如果订阅链接在 secrets 中）
-    - cron: '0 3 * * *'
 
 env:
   OUTPUT_FILENAME: ${{ github.event.inputs.output_filename || 'sub_xfltd' }}

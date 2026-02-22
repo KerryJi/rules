@@ -30,12 +30,8 @@ dns:
   fake-ip-filter-mode: rule
   fake-ip-filter:
     - RULE-SET,fakeip-filter,real-ip
-    - RULE-SET,private,real-ip
-    - RULE-SET,cn,real-ip
-    - RULE-SET,direct-self,real-ip
-    - RULE-SET,ntpservice,real-ip
-    - RULE-SET,pt,real-ip
     - RULE-SET,proxy,fake-ip
+    - RULE-SET,pt,real-ip
     - MATCH,real-ip
   respect-rules: true
   nameserver:
@@ -49,4 +45,8 @@ dns:
   direct-nameserver:
     - https://dns.pub/dns-query
     - quic://dns.alidns.com:853
+  nameserver-policy:
+    'rule-set:fakeip-filter,cn':
+      - https://dns.pub/dns-query
+      - quic://dns.alidns.com:853
 

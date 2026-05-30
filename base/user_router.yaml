@@ -38,7 +38,6 @@ dns:
     # 推荐将 `ecs` 设置为当前宽带运营商分配的默认 DNS 的 IP 段
     - 'https://dns.google/dns-query#ecs=210.22.70.0/24'
     - 'https://dns11.quad9.net/dns-query#ecs=210.22.70.0/24'
-    - 192.168.31.3:6553
   proxy-server-nameserver:
     - https://dns.pub/dns-query
     - quic://dns.alidns.com:853
@@ -46,7 +45,6 @@ dns:
     - https://dns.pub/dns-query
     - quic://dns.alidns.com:853
   nameserver-policy:
-    'rule-set:fakeip-filter,cn':
-      - https://dns.pub/dns-query
-      - quic://dns.alidns.com:853
+    'rule-set:private': [system]
+    'rule-set:fakeip-filter,direct-self,microsoft,apple,google-cn,games-cn,cn': [192.168.31.3:6553, quic://dns.alidns.com:853, https://doh.pub/dns-query]
 

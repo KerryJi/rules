@@ -46,9 +46,11 @@ dns:
     - 'https://dns.google/dns-query#ecs=210.22.70.0/24'
     - 'https://dns11.quad9.net/dns-query#ecs=210.22.70.0/24'
   proxy-server-nameserver:
+    - 192.168.31.3:6553
     - https://dns.pub/dns-query
     - quic://dns.alidns.com:853
   direct-nameserver:
+    - 192.168.31.3:6553
     - https://dns.pub/dns-query
     - quic://dns.alidns.com:853
   direct-nameserver-follow-policy: true

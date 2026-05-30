@@ -30,9 +30,16 @@ dns:
   fake-ip-filter-mode: rule
   fake-ip-filter:
     - RULE-SET,fakeip-filter,real-ip
+    - RULE-SET,private,real-ip
+    - RULE-SET,direct-self,real-ip
+    - RULE-SET,microsoft,real-ip
+    - RULE-SET,apple,real-ip
+    - RULE-SET,google-cn,real-ip
+    - RULE-SET,games-cn,real-ip
+    - RULE-SET,ai,fake-ip
     - RULE-SET,proxy,fake-ip
-    - RULE-SET,pt,real-ip
-    - MATCH,real-ip
+    - RULE-SET,cn,real-ip
+    - MATCH,fake-ip
   respect-rules: true
   nameserver:
     # 推荐将 `ecs` 设置为当前宽带运营商分配的默认 DNS 的 IP 段
@@ -44,6 +51,7 @@ dns:
   direct-nameserver:
     - https://dns.pub/dns-query
     - quic://dns.alidns.com:853
+  direct-nameserver-follow-policy: true
   nameserver-policy:
     'rule-set:private': [system]
     'rule-set:fakeip-filter,direct-self,microsoft,apple,google-cn,games-cn,cn': [192.168.31.3:6553, quic://dns.alidns.com:853, https://doh.pub/dns-query]

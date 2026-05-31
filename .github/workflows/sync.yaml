@@ -7,26 +7,12 @@ on:
   schedule:
     - cron: '0 3 * * 6'
 
-env:
-  CHOOSE_END: "9"
-  CONFIG: "https://raw.githubusercontent.com/KerryJi/rules/main/cla.ini"
-  CONFIG2: "https://raw.githubusercontent.com/KerryJi/rules/main/nodnsleak.ini"
-  CONFIG3: "https://raw.githubusercontent.com/KerryJi/rules/main/sb_ruleset.ini"
-  CONFIG4: "https://raw.githubusercontent.com/KerryJi/rules/main/sbp_ruleset.ini"
-
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
-    - name: "Setup sing-box"
-      env:
-        SING_BOX_DEB_URL: "https://github.com/SagerNet/sing-box/releases/download/v1.9.0/sing-box_1.9.0_linux_amd64.deb"
-      run: |
-          set -Eeuo pipefail
-          wget -O sing-box.deb $SING_BOX_DEB_URL
-          sudo dpkg -i sing-box.deb
     - name: Set up Python3
       uses: actions/setup-python@v2
       with:
@@ -36,52 +22,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install pandas requests pyyaml
         wget https://github.com/mikefarah/yq/releases/download/v4.44.3/yq_linux_amd64.tar.gz -O - | tar xz && sudo mv yq_linux_amd64 /usr/bin/yq
-    - name: Run converter script
-      run: python ../converter.py
-      working-directory: ./rule/
-    - name: cp sb_ruleset.ini sbp_ruleset.ini
-      run: |
-        jq -s '.[0] * .[1]' "base/sb_base_ruleset.json" "base/dns_p.json" > "base/sbp_base_ruleset.json"
-        cp -f sb_ruleset.ini sbp_ruleset.ini
-        sed -i 's/sb_base_ruleset/sbp_base_ruleset/g' sbp_ruleset.ini
-    - name: Commit and push config.json/srs
-      run: |
-        git config --global user.email "action@github.com"
-        git config --global user.name "GitHub Action"
-        git add ./rule/*.json
-        git add ./rule/*.srs
-        git add ./*.ini
-        git add ./base/*.json
-
-        # 检查是否有文件被修改
-        if git diff --staged --quiet; then
-          echo "No changes to commit"
-        else
-          git commit -m "Update rules"
-          git push
-        fi
-    - name: Run update_subscription script
-      run: |
-        curl -O https://gist.githubusercontent.com/KerryJi/${{ secrets.GIST_ID }}/raw/suburl.txt
-        SUBSCRIPTION_URLS=$(paste -sd '|' suburl.txt)
-        # python3 update_subscription.py -s "${SUBSCRIPTION_URLS}" -c "${CONFIG}" -e "${CHOOSE_END}" -t "clash" -o "cla.yaml"
-        # - python3 update_subscription_script.py -s "${SUBSCRIPTION_URLS}" -c "${CONFIG}" -e "${CHOOSE_END}" -t "singbox" -o "singbox.json"
-        # python3 update_subscription.py -s "${SUBSCRIPTION_URLS}" -c "${CONFIG2}" -e "${CHOOSE_END}" -t "clash" -o "cla2.yaml"
-        # - python3 update_subscription_script.py -s "${SUBSCRIPTION_URLS}" -c "${CONFIG2}" -e "${CHOOSE_END}" -t "singbox" -o "singbox2.json"
-        python3 update_subscription.py -s "${SUBSCRIPTION_URLS}" -c "${CONFIG3}" -e "${CHOOSE_END}" -t "singbox" -o "sb_ruleset.json"
-        # python3 update_subscription.py -s "${SUBSCRIPTION_URLS}" -c "${CONFIG4}" -e "${CHOOSE_END}" -t "singbox" -o "sbp_ruleset.json"
-    # - name: create spb_ruleset2.json
-    #   run: |
-    #     curl -O https://gist.githubusercontent.com/KerryJi/${{ secrets.GIST_ID }}/raw/outbound_providers.json
-    #     # curl -O https://gist.githubusercontent.com/KerryJi/${{ secrets.GIST_ID }}/raw/suburl.txt
-    #     # SUBSCRIPTION_URLS=$(paste -sd '|' suburl.txt)
-    #     # python3 update_subscription.py -s "${SUBSCRIPTION_URLS}" -c "${CONFIG2}" -e "${CHOOSE_END}" -t "clash" -o "cla_link.txt" -l True
-    #     # jq --arg cla_link "$(<cla_link.txt)" '.outbound_providers[0].download_url = $cla_link' outbound_providers.json > temp_outbound_providers.json
-    #     jq -s '.[0] * .[1] * .[2] * .[3]' "sbp_ruleset.json" "base/dns_p.json" "base/outbounds_use_provider.json" "outbound_providers.json" > "sbp_ruleset2.json"
-    #     jq -s '.[0] * .[1]' "sbp_ruleset2.json" "base/inbounds_109.json" > "sbp_ruleset2_109.json"
-    #     jq 'del(.inbounds[1])' sbp_ruleset2.json > "sbp_ruleset2_win.json"
-    #     jq '.inbounds[1] += {"auto_redirect": true}' sb_ruleset.json > "sb_ruleset_redir.json"
-    #     jq '.inbounds[1] += {"auto_redirect": true}' sbp_ruleset2.json > "sbp_ruleset2_redir.json"
     - name: create cla_ruleset.yaml
       run: |
         curl -O https://gist.githubusercontent.com/KerryJi/${{ secrets.GIST_ID }}/raw/cla_providers.yaml
@@ -133,73 +73,3 @@ jobs:
         gist_id:  ${{ secrets.GIST_ID }}
         file_path: cla_ruleset_all_router.yaml
         file_type: text
-    - name: Push to gist
-      uses: exuanbo/actions-deploy-gist@v1
-      with:
-        token: ${{ secrets.GIST_TOKEN }}
-        gist_id:  ${{ secrets.GIST_ID }}
-        file_path: sb_ruleset.json
-        file_type: text
-    - name: Push to gist
-      uses: exuanbo/actions-deploy-gist@v1
-      with:
-        token: ${{ secrets.GIST_TOKEN }}
-        gist_id:  ${{ secrets.GIST_ID }}
-        file_path: sb_ruleset.json.link
-        file_type: text
-    # - name: Push to gist
-    #   uses: exuanbo/actions-deploy-gist@v1
-    #   with:
-    #     token: ${{ secrets.GIST_TOKEN }}
-    #     gist_id:  ${{ secrets.GIST_ID }}
-    #     file_path: sb_ruleset_redir.json
-    #     file_type: text
-    # - name: Push to gist
-    #   uses: exuanbo/actions-deploy-gist@v1
-    #   with:
-    #     token: ${{ secrets.GIST_TOKEN }}
-    #     gist_id:  ${{ secrets.GIST_ID }}
-    #     file_path: sbp_ruleset2.json
-    #     file_type: text
-    # - name: Push to gist
-    #   uses: exuanbo/actions-deploy-gist@v1
-    #   with:
-    #     token: ${{ secrets.GIST_TOKEN }}
-    #     gist_id:  ${{ secrets.GIST_ID }}
-    #     file_path: sbp_ruleset2_redir.json
-    #     file_type: text
-    # - name: Push to gist
-    #   uses: exuanbo/actions-deploy-gist@v1
-    #   with:
-    #     token: ${{ secrets.GIST_TOKEN }}
-    #     gist_id:  ${{ secrets.GIST_ID }}
-    #     file_path: sbp_ruleset2_109.json
-    #     file_type: text
-    # - name: Push to gist
-    #   uses: exuanbo/actions-deploy-gist@v1
-    #   with:
-    #     token: ${{ secrets.GIST_TOKEN }}
-    #     gist_id:  ${{ secrets.GIST_ID }}
-    #     file_path: sbp_ruleset2_win.json
-    #     file_type: text
-    # - name: Push to gist
-    #   uses: exuanbo/actions-deploy-gist@v1
-    #   with:
-    #     token: ${{ secrets.GIST_TOKEN }}
-    #     gist_id:  ${{ secrets.GIST_ID }}
-    #     file_path: cla.yaml
-    #     file_type: text
-    # - name: Push to gist
-    #   uses: exuanbo/actions-deploy-gist@v1
-    #   with:
-    #     token: ${{ secrets.GIST_TOKEN }}
-    #     gist_id:  ${{ secrets.GIST_ID }}
-    #     file_path: cla2.yaml
-    #     file_type: text
-    # - name: Push to gist
-    #   uses: exuanbo/actions-deploy-gist@v1
-    #   with:
-    #     token: ${{ secrets.GIST_TOKEN }}
-    #     gist_id:  ${{ secrets.GIST_ID }}
-    #     file_path: sbp_ruleset.json
-    #     file_type: text
